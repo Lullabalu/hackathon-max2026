@@ -57,8 +57,8 @@ class BenchmarkQualityTests(unittest.TestCase):
         self.assertEqual(metrics['reply_characters'], len(reply))
         self.assertEqual(metrics['longest_quote_characters'], len('короткая цитата'))
         self.assertEqual(metrics['longest_source_copy_characters'], 0)
-        case = summary_case(REPLY + ' ' + 'а' * 1500)
-        with self.assertRaisesRegex(AssertionError, '1500'):
+        case = summary_case(REPLY + ' ' + 'а' * 3600)
+        with self.assertRaisesRegex(AssertionError, '3600'):
             check_summary_case(case)
 
     def test_fee_answer_must_retain_electronic_condition_and_direct_conclusion(self):
@@ -73,7 +73,7 @@ class BenchmarkQualityTests(unittest.TestCase):
             if change == 'profile':
                 case['model_stages'][0]['profile_seen'] = False
             else:
-                case['model_calls'] = 3
+                case['model_calls'] = 7
             with self.subTest(change=change), self.assertRaises(AssertionError):
                 check_summary_case(case)
 

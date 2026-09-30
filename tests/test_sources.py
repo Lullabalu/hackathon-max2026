@@ -299,7 +299,7 @@ class ResearcherCacheTests(unittest.TestCase):
         self.assertEqual(matches, self.matches)
         self.assertEqual(errors, [])
         self.fetcher.fetch.assert_not_called()
-        self.store.search_documents.assert_called_once_with('Документы для регистрации ИП', [self.seed], limit=4)
+        self.store.search_documents.assert_called_once_with('Документы для регистрации ИП', [self.seed], limit=8)
 
     def test_low_budget_returns_completed_article_without_starting_next_page(self):
         self.documents.clear()

@@ -44,7 +44,7 @@ class SummarizationTests(unittest.TestCase):
     def test_schema_rejects_extra_fields_bad_ids_and_mixed_clarification(self):
         for data in ({'points': [], 'clarification': ''},
                      {'points': [point().model_dump()], 'clarification': 'Уточните'},
-                     {'points': [point().model_dump()] * 4, 'clarification': ''},
+                     {'points': [point().model_dump()] * 7, 'clarification': ''},
                      {'points': [], 'clarification': 'Какой документ?', 'url': 'https://evil.test'}):
             with self.subTest(data=data), self.assertRaises(ValidationError):
                 Summary.model_validate(data)
@@ -229,7 +229,9 @@ class SummarizationTests(unittest.TestCase):
     def test_overlong_answer_is_rejected_whole_without_losing_an_exception(self):
         source = {**PASSAGES[0], 'url': 'https://nalog.gov.ru/' + 'a' * 1350}
         value = result(point(), point('При электронной подаче документов госпошлина не уплачивается.', evidence=3))
-        self.assertIsNone(render_summary(value, [source]))
+        from unittest.mock import patch
+        with patch('ip_bot.summarization.MAX_SUMMARY_CHARS', 1500):
+            self.assertIsNone(render_summary(value, [source]))
 
     def test_prompt_has_numbered_evidence_without_duplicated_source_text(self):
         source = json.loads(summary_input('Документы?', {}, PASSAGES))['sources'][0]
@@ -350,7 +352,7 @@ class SummarizationTests(unittest.TestCase):
 
     def test_long_left_neighbor_does_not_drop_short_following_mfc_condition(self):
         source = {'url': PASSAGES[0]['url'], 'text':
-                  'Длинное предыдущее предложение ' + 'подробность ' * 124 + '. '
+                  'Длинное предыдущее предложение ' + 'подробность ' * 300 + '. '
                   'Документы можно подать в МФЦ лично. '
                   'Информацию об оказании услуги в МФЦ необходимо уточнить на сайте МФЦ. '
                   'Следующий раздел описывает отдельный порядок получения документов.'}

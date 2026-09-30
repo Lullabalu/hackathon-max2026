@@ -21,17 +21,25 @@ def integer(name, default, minimum, maximum):
     return value
 
 
+def boolean(name, default):
+    value = os.getenv(name, 'true' if default else 'false').strip().lower()
+    if value not in {'true', 'false', '1', '0', 'yes', 'no'}:
+        raise ValueError(f'{name}: допустимо true или false.')
+    return value in {'true', '1', 'yes'}
+
+
 @dataclass(frozen=True)
 class Settings:
     database_url: str = ""
     token: str = ""
     ollama_url: str = "http://127.0.0.1:11434"
-    model: str = "qwen3.5:4b-q4_K_M"
+    model: str = "qwen3.5:9b"
     model_timeout: int = MODEL_SECONDS
     context_tokens: int = 16384
     model_threads: int = 4
     model_device: str = "cpu"
     model_keep_alive: str = "30m"
+    model_think: bool = False
     sources_file: Path = ROOT / "config/sources.json"
     max_pages: int = 12
     source_ttl_hours: int = 24
@@ -40,6 +48,8 @@ class Settings:
     consultant_url: str = ""
 
     def __post_init__(self):
+        if type(self.model_think) is not bool:
+            raise ValueError('AI_THINK: допустимо true или false.')
         if self.consultant_url:
             url = urlsplit(self.consultant_url)
             if url.scheme != 'https' or not url.hostname or url.username or len(self.consultant_url) > 1000:
@@ -62,12 +72,13 @@ class Settings:
         return cls(
             database_url=dsn, token=os.getenv("MAX_BOT_TOKEN", "").strip(),
             ollama_url=os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434").rstrip("/"),
-            model=os.getenv("OLLAMA_MODEL", "qwen3.5:4b-q4_K_M"),
+            model=os.getenv("OLLAMA_MODEL", "qwen3.5:9b"),
             model_timeout=integer("AI_TIMEOUT_SECONDS", MODEL_SECONDS, 0, 86400),
             context_tokens=integer("AI_CONTEXT_TOKENS", 16384, 4096, 32768),
             model_threads=integer("AI_THREADS", 4, 1, 64),
             model_device=os.getenv("AI_DEVICE", "cpu").strip().lower(),
             model_keep_alive=os.getenv("AI_KEEP_ALIVE", "30m").strip(),
+            model_think=boolean("AI_THINK", False),
             sources_file=Path(os.getenv("SOURCES_FILE", str(ROOT / "config/sources.json"))),
             max_pages=integer("SEARCH_MAX_PAGES", 12, 1, 12),
             source_ttl_hours=integer("SOURCE_TTL_HOURS", 24, 1, 168),

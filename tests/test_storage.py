@@ -275,17 +275,16 @@ class StorageTests(unittest.TestCase):
         self.assertEqual(len(sent), 1)
         self.assertIsNone(self.store.pending())
 
-    def test_expired_question_skips_model_and_does_not_enter_history(self):
-        self.store.enqueue([{'event_id': 'expired-ai', 'user_id': 1, 'text': 'Документы ИП'}])
-        self.store.db.execute("UPDATE events SET received_at = now() - interval '1 minute'")
-        class MustNotRun:
-            def respond(self, *args):
-                raise AssertionError('Expired events must not generate')
+    def test_old_question_is_answered_and_remembered(self):
+        self.store.enqueue([{'event_id': 'old-ai', 'user_id': 1, 'text': 'Документы ИП'}])
+        self.store.db.execute("UPDATE events SET received_at = now() - interval '1 hour'")
+        class Respond:
+            def respond(self, state, text, history):
+                return Reply(state, 'Подтверждённый ответ', remember=True)
         sent = []
-        drain(self.store, lambda user, text: sent.append(text), MustNotRun())
-        self.assertEqual(len(sent), 1)
-        self.assertIn('Не успел', sent[0])
-        self.assertEqual(self.store.history(1), [])
+        drain(self.store, lambda user, text: sent.append(text), Respond())
+        self.assertEqual(sent, ['Подтверждённый ответ'])
+        self.assertEqual(len(self.store.history(1)), 1)
         self.assertIsNone(self.store.pending())
 
     def test_expired_delete_and_new_still_apply_to_profile(self):
@@ -341,11 +340,11 @@ class StorageTests(unittest.TestCase):
         self.assertLessEqual(len(result['text']), 3520)
         self.assertNotIn('Чужой контекст', result['text'])
         self.assertEqual(self.store.search_documents('Р21001', [document.url], limit=0), [])
-        for i in range(5):
+        for i in range(15):
             self.store.save_document(Document(f'https://nalog.gov.ru/result-{i}', 'Форма',
                 'Заявление по форме Р21001 подают при регистрации индивидуального предпринимателя.', [], 'text/html'))
-        urls = [f'https://nalog.gov.ru/result-{i}' for i in range(5)]
-        self.assertEqual(len(self.store.search_documents('Р21001', urls, limit=100)), 4)
+        urls = [f'https://nalog.gov.ru/result-{i}' for i in range(15)]
+        self.assertEqual(len(self.store.search_documents('Р21001', urls, limit=100)), 12)
 
     def test_search_keeps_later_filing_option_and_its_condition(self):
         opening = 'Заполните заявление Р21001. '

@@ -1,4 +1,4 @@
-"""Общий монотонный бюджет для синхронного worker на macOS/Linux.
+"""Необязательные технические таймеры для синхронного worker в POSIX-системах.
 
 SIGALRM ограничивает ожидания вместе с таймаутами сокетов и явными проверками.
 Это не изоляция процесса: длительный C-вызов может отложить Python-обработчик.
@@ -62,7 +62,7 @@ def time_limit(seconds):
     if not math.isfinite(seconds) or seconds <= 0:
         raise BudgetExpired()
     if threading.current_thread() is not threading.main_thread() or not hasattr(signal, 'setitimer'):
-        raise RuntimeError('Бюджет времени требует главного потока worker на macOS/Linux.')
+        raise RuntimeError('Бюджет времени требует главного потока worker в POSIX-системах.')
     started = time.monotonic()
     parent = _deadline.get()
     deadline = min(started + seconds, parent) if parent is not None else started + seconds

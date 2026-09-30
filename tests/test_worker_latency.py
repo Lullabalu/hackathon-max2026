@@ -77,17 +77,18 @@ class WorkerLatencyTests(unittest.TestCase):
         self.assertEqual(store.state, original)
         self.assertTrue(store.done)
 
-    def test_expired_research_skips_history_and_assistant(self):
-        store, assistant, sent = FakeStore(age=60), Mock(), []
+    def test_queue_age_does_not_discard_research(self):
+        store, assistant, sent = FakeStore(age=3600), Mock(), []
+        assistant.respond.return_value = Reply(store.state, 'Подтверждённый ответ')
         drain(store, lambda _, text: sent.append(text), assistant)
-        assistant.respond.assert_not_called()
-        store.history.assert_not_called()
-        self.assertIn('Не успел', sent[0])
+        assistant.respond.assert_called_once()
+        store.history.assert_called_once()
+        self.assertEqual(sent, ['Подтверждённый ответ'])
 
     def test_pending_preparation_delivery_and_failure_fit_one_overall_allowance(self):
-        self.assertEqual(PROCESSING_SECONDS, 30)
-        self.assertEqual(PREPARATION_SECONDS + DELIVERY_SECONDS + FAILURE_RECORD_SECONDS, PROCESSING_SECONDS)
-        self.assertEqual(MODEL_SECONDS, 20)
+        self.assertIsNone(PROCESSING_SECONDS)
+        self.assertIsNone(PREPARATION_SECONDS)
+        self.assertEqual(MODEL_SECONDS, 0)
         store, assistant = FakeStore(), Mock()
         events = []
 
@@ -214,20 +215,19 @@ class PostgreSQLLatencyTests(unittest.TestCase):
         self.enqueue('/help')
         self.assertIsNotNone(self.store.pending())
 
-    def test_expired_real_assistant_route_skips_model_research_and_history(self):
+    def test_old_real_event_is_processed_and_history_is_preserved(self):
+        from test_assistant import FakeModel, FakeResearcher
         state = {'answers': {}, 'paused': True, 'consent': {'accepted': True}}
         self.store.db.execute('INSERT INTO profiles(user_id, state) VALUES (1, %s)', (Jsonb(state),))
-        self.enqueue()
-        self.store.db.execute("UPDATE events SET received_at = now() - interval '1 minute'")
-        model, researcher, sent = Mock(), Mock(), Mock()
+        self.enqueue('/ask Как заполнить Р21001?')
+        self.store.db.execute("UPDATE events SET received_at = now() - interval '1 hour'")
+        model, researcher, sent = FakeModel(), FakeResearcher(), Mock()
         assistant = Assistant(self.store, Settings(), model=model, researcher=researcher)
-        with patch.object(self.store, 'history', side_effect=AssertionError('No history for expired work')):
-            drain(self.store, sent, assistant)
-        model.generate.assert_not_called()
-        researcher.search.assert_not_called()
-        self.assertIn('Не успел', sent.call_args.args[1])
+        drain(self.store, sent, assistant)
+        self.assertGreater(researcher.calls, 0)
+        self.assertIn('Р21001', sent.call_args.args[1])
         self.assertEqual(self.store.load_profile(1), state)
-        self.assertEqual(self.store.history(1), [])
+        self.assertEqual(len(self.store.history(1)), 1)
 
     def test_hung_database_during_preparation_does_not_start_model_or_kill_worker(self):
         self.enqueue()
@@ -249,9 +249,10 @@ class PostgreSQLLatencyTests(unittest.TestCase):
         self.assertTrue(self.reconnect())
         self.assertIsNone(self.store.pending()['reply'])
         self.store.db.execute("UPDATE events SET received_at = now() - interval '1 minute'")
+        assistant.respond.return_value = Reply({'answers': {}}, 'Ответ после восстановления')
         drain(self.store, sent, assistant, retry_errors=True)
-        assistant.respond.assert_not_called()
-        self.assertIn('Не успел', sent.call_args.args[1])
+        assistant.respond.assert_called_once()
+        self.assertIn('Ответ после восстановления', sent.call_args.args[1])
         self.assertIsNone(self.store.pending())
 
     def test_lock_timeout_defers_event_and_worker_can_deliver_on_retry(self):

@@ -147,7 +147,7 @@ def main():
         raise SystemExit('Оценка разрешена только на синтетической фикстуре')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--model', required=True, help='Точное имя установленной локальной модели Ollama')
-    parser.add_argument('--device', choices=('auto', 'cpu'), default='auto', help='auto допускает Metal/GPU; cpu принудительно использует CPU')
+    parser.add_argument('--device', choices=('auto', 'cpu'), default='auto', help='auto выбирает доступное устройство; cpu принудительно использует CPU')
     parser.add_argument('--case', action='append', choices=[case['id'] for case in fixture['cases']], help='Только выбранный кейс; можно повторить аргумент')
     parser.add_argument('--output', type=Path, default=DEFAULT_REPORT, help='JSON-отчёт, по умолчанию data/planner-quality-check.json')
     args = parser.parse_args()

@@ -383,7 +383,7 @@ class Researcher:
             urls, completed_at = previous
             if (time.monotonic() - completed_at < self.settings.source_ttl_hours * 3600
                     and self.fresh_urls(urls) == urls):
-                matches = self.store.search_documents(query, urls, limit=4)
+                matches = self.store.search_documents(query, urls, limit=8)
                 check_budget()
                 if self.has_cache_evidence(matches, terms):
                     return matches
@@ -392,7 +392,7 @@ class Researcher:
         fresh = self.fresh_urls(seeds)
         if not fresh:
             return None
-        matches = self.store.search_documents(query, fresh, limit=4)
+        matches = self.store.search_documents(query, fresh, limit=8)
         check_budget()
         qualified_urls = {item['url'] for item in matches
                           if item['url'] in fresh and terms <= self.cache_terms(item['text'])}
@@ -463,7 +463,7 @@ class Researcher:
                     break
         usable = list(dict.fromkeys(usable))
         check_budget()
-        matches = self.store.search_documents(query, usable, limit=4)
+        matches = self.store.search_documents(query, usable, limit=8)
         check_budget()
         terms = self.cache_terms(plan.query)
         # Запоминаем завершённый ограниченный обход только этого запроса, не всей

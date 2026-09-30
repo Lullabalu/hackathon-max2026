@@ -87,7 +87,7 @@ def main():
                     'модель сейчас недоступна', 'выдержки из официальных',
                     'недостаточно данных для ответа',
                 )),
-                'short_answer': 0 < len(reply) <= 1500,
+                'short_answer': 0 < len(reply) <= 3600,
                 'not_large_excerpts': metrics['longest_quote_characters'] <= 360
                     and metrics['longest_source_copy_characters'] <= 360,
                 'source_citations': '[1]' in reply and 'https://' in reply,

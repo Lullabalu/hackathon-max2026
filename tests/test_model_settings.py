@@ -30,11 +30,11 @@ class ModelSettingsTests(unittest.TestCase):
         with patch.dict(os.environ, {}, clear=True):
             settings = Settings.from_env()
         self.assertEqual(settings.model_device, 'cpu')
-        self.assertEqual(settings.context_tokens, 4096)
+        self.assertEqual(settings.context_tokens, 16384)
         self.assertEqual(settings.model_keep_alive, '30m')
         body = self.request_body(settings)
         self.assertEqual(body['options']['num_gpu'], 0)
-        self.assertEqual(body['options']['num_ctx'], 4096)
+        self.assertEqual(body['options']['num_ctx'], 16384)
         self.assertEqual(body['keep_alive'], '30m')
 
     def test_auto_leaves_hardware_selection_to_native_ollama(self):
@@ -55,6 +55,14 @@ class ModelSettingsTests(unittest.TestCase):
                         Settings.from_env()
                 with self.assertRaisesRegex(ValueError, 'AI_DEVICE'):
                     Settings(model_device=value)
+
+    def test_reasoning_can_be_explicitly_enabled_but_not_misspelled(self):
+        with patch.dict(os.environ, {'AI_THINK': 'true'}, clear=True):
+            settings = Settings.from_env()
+        self.assertTrue(self.request_body(settings)['think'])
+        with patch.dict(os.environ, {'AI_THINK': 'maybe'}, clear=True):
+            with self.assertRaisesRegex(ValueError, 'AI_THINK'):
+                Settings.from_env()
 
     def test_keep_alive_duration_validation(self):
         for value in ['1s', '15m', '2h', '999m']:
@@ -77,7 +85,7 @@ class ModelSettingsTests(unittest.TestCase):
                 Settings.from_env()
 
     def test_warmup_loads_without_prompt_using_generation_hardware_options(self):
-        for device, timeout, expected_timeout in [('cpu', 600, 20), ('auto', 12, 12)]:
+        for device, timeout, expected_timeout in [('cpu', 600, 600), ('auto', 12, 12)]:
             with self.subTest(device=device):
                 settings = Settings(model_device=device, model_timeout=timeout, model_keep_alive='1h',
                                     context_tokens=8192, model_threads=6)

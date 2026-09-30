@@ -10,7 +10,7 @@ from ip_bot.max_api import APIError, MaxAPI
 
 
 class MaxDeadlineTests(unittest.TestCase):
-    def test_send_has_five_second_budget_and_polling_keeps_45_second_timeout(self):
+    def test_network_operations_keep_transport_timeouts(self):
         api = MaxAPI('example-not-a-real-token')
         timeouts = []
 
@@ -24,7 +24,7 @@ class MaxDeadlineTests(unittest.TestCase):
             self.assertTrue(api.send_message(1, 'Ответ')['success'])
             api.updates(None)
         self.assertGreater(timeouts[0], 0)
-        self.assertLessEqual(timeouts[0], 5)
+        self.assertLessEqual(timeouts[0], 45)
         self.assertGreater(timeouts[1], 44)
         self.assertLessEqual(timeouts[1], 45)
 

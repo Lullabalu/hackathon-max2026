@@ -57,3 +57,9 @@ class QuestionIntentTests(unittest.TestCase):
         self.assertFalse(intent.to_plan(context=context).clarification)
         wrong = intent.model_copy(update={'text': 'УСН доход 1200001 ИП в 18 лет'})
         self.assertTrue(wrong.to_plan(context=context).clarification)
+
+    def test_thousands_separators_do_not_turn_existing_amount_into_invented_numbers(self):
+        context = {'question': 'Налог по моей анкете?', 'profile': {'revenue': '1200000.00'}}
+        intent = QuestionIntent(action='search', text='Налог при доходе 1 200 000 рублей', topics=['taxes'])
+        self.assertFalse(intent.to_plan(context=context).clarification)
+        self.assertTrue(intent.model_copy(update={'text': 'Доход 1 200 001 рублей'}).to_plan(context=context).clarification)

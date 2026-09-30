@@ -40,7 +40,7 @@ class FakeModel:
             if self.summary_response is not None:
                 return self.summary_response
             return first_sentence_summary(self.calls[-1])
-        answer = next(self.answers)
+        answer = next(self.answers, ModelError("model_unavailable"))
         if isinstance(answer, Exception):
             raise answer
         if schema is QuestionIntent and isinstance(answer, Plan):

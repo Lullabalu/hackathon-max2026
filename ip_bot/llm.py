@@ -9,7 +9,7 @@ from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_ope
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
-from .budget import BudgetExpired, MODEL_SECONDS, check_budget, request_timeout, time_limit
+from .budget import BudgetExpired, check_budget, request_timeout, time_limit
 
 
 class ModelError(RuntimeError):
@@ -45,10 +45,11 @@ class QuestionIntent(BaseModel):
         # возраст или сумму. При сомнении просим уточнение без обращения к сайтам.
         if self.action == 'search' and context is not None:
             supplied = json.dumps({key: context.get(key, {}) for key in ('question', 'profile', 'history')}, ensure_ascii=False)
-            number_pattern = r'\d+(?:[.,]\d+)?'
+            number_pattern = r'\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:[.,]\d+)?|\d+(?:[.,]\d+)?'
             def canonical(number):
                 # Decimal strings from PostgreSQL often end with .00. Keep
                 # leading zeroes (document/date identifiers) significant.
+                number = re.sub(r'[ \u00a0\u202f]', '', number)
                 whole, separator, fraction = number.replace(',', '.').partition('.')
                 fraction = fraction.rstrip('0')
                 return whole + ('.' + fraction if separator and fraction else '')
@@ -93,9 +94,12 @@ class Ollama:
 
     def _options(self):
         options = {"num_ctx": self.settings.context_tokens,
-                   "num_thread": self.settings.model_threads, "temperature": 0,
-                   "presence_penalty": 0}
-        # On a CPU VM this is explicit; native Ollama on macOS can select Metal.
+                   "num_thread": self.settings.model_threads,
+                   "temperature": 1.0 if self.settings.model_think else 0.7,
+                   "top_p": 0.95 if self.settings.model_think else 0.8,
+                   "top_k": 20, "min_p": 0.0,
+                   "presence_penalty": 1.5, "repeat_penalty": 1.0}
+        # CPU mode is explicit; auto lets Ollama select the available device.
         if self.settings.model_device == "cpu":
             options["num_gpu"] = 0
         return options
@@ -134,10 +138,10 @@ class Ollama:
             with time_limit(self.settings.model_timeout or None):
                 messages = [{"role": "system", "content": system}, {"role": "user", "content": content}]
                 body = {
-                    "model": self.settings.model, "stream": False, "think": False,
+                    "model": self.settings.model, "stream": False, "think": self.settings.model_think,
                     "format": schema.model_json_schema(), "keep_alive": self.settings.model_keep_alive,
                     "messages": messages,
-                    "options": dict(self._options(), num_predict=max_tokens),
+                    "options": dict(self._options(), num_predict=max(max_tokens, 8192) if self.settings.model_think else max_tokens),
                 }
                 req = Request(self.settings.ollama_url + "/api/chat", data=json.dumps(body).encode(),
                               headers={"Content-Type": "application/json"}, method="POST")

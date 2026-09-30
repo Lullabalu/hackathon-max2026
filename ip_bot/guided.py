@@ -240,7 +240,7 @@ class Guide:
             state.pop('selected_regime', None)
             self.journey.refresh_reminders(state)
         state.setdefault('answers', {})['activity'] = description
-        result = suggest_activity(description, catalog=self.journey.published('activities'))
+        result = self.journey.activity_resolver(description, catalog=self.journey.published('activities'))
         target = {'matched': 'okved_confirm', 'clarify': 'activity_clarify', 'unknown': 'okved_unknown', 'restricted': 'activity_restricted'}[result['status']]
         return self.move(state, target, suggestion=result, description=description)
 

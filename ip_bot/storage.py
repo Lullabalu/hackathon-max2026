@@ -244,7 +244,7 @@ class Store:
                 WHERE url = hits.url AND id > following.id ORDER BY id LIMIT 1
             ) continuation ON true
             ORDER BY hits.rank DESC, hits.id
-        ''', (query, urls, min(limit, 4))).fetchall()
+        ''', (query, urls, min(limit, 12))).fetchall()
 
         def join_adjacent(left, right):
             if not left:

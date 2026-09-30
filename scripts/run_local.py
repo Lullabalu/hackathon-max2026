@@ -1,4 +1,4 @@
-"""python -m scripts.run_local: PostgreSQL, Ollama и MAX на одном Mac/Linux."""
+"""python -m scripts.run_local: PostgreSQL, Ollama и MAX на одном компьютере."""
 import argparse
 import fcntl
 import json
@@ -145,7 +145,7 @@ def run(env):
                     break
                 except OSError:
                     time.sleep(0.5)
-        expected = env.get('OLLAMA_MODEL', 'qwen3.5:4b-q4_K_M')
+        expected = env.get('OLLAMA_MODEL', 'qwen3.5:9b')
         if expected not in {model['name'] for model in models.get('models', [])}:
             raise ValueError('Модель не найдена. Запустите serve_ai.sh и скачайте OLLAMA_MODEL командой ollama pull.')
         print('Локальная модель доступна:', expected, flush=True)

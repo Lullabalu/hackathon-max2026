@@ -61,8 +61,8 @@ class BudgetTests(unittest.TestCase):
             def model_json_schema():
                 time.sleep(0.5)
                 return {}
-        model = Ollama(Settings())
-        with patch.object(model.opener, 'open') as opened, patch('ip_bot.llm.MODEL_SECONDS', 0.03):
+        model = Ollama(Settings(model_timeout=0.03))
+        with patch.object(model.opener, 'open') as opened:
             with self.assertRaisesRegex(ModelError, 'model_timeout'):
                 model.generate(SlowSchema, 'system', 'question')
         opened.assert_not_called()
@@ -73,8 +73,8 @@ class BudgetTests(unittest.TestCase):
                 time.sleep(0.5)
                 return super().read(*args)
         response = SlowResponse(b'{}')
-        model = Ollama(Settings())
-        with patch.object(model.opener, 'open', return_value=response), patch('ip_bot.llm.MODEL_SECONDS', 0.04):
+        model = Ollama(Settings(model_timeout=0.03))
+        with patch.object(model.opener, 'open', return_value=response):
             with self.assertRaisesRegex(ModelError, 'model_timeout'):
                 model.generate(Plan, 'system', 'question')
         self.assertTrue(response.closed)
@@ -93,9 +93,9 @@ class BudgetTests(unittest.TestCase):
         self.assertEqual(reply.state, state)
         self.assertIn('Я бот', assistant.respond(state, 'Кто ты?').text)
 
-    def test_legacy_model_timeout_cannot_bypass_response_limit(self):
+    def test_explicit_model_timeout_is_not_clamped(self):
         with patch.dict('os.environ', {'AI_TIMEOUT_SECONDS': '600'}, clear=True):
-            self.assertEqual(Settings.from_env().model_timeout, 20)
+            self.assertEqual(Settings.from_env().model_timeout, 600)
 
     def test_warmup_cannot_block_worker_start_indefinitely(self):
         class SlowResponse(io.BytesIO):
@@ -103,8 +103,8 @@ class BudgetTests(unittest.TestCase):
                 time.sleep(0.5)
                 return super().read(*args)
         response = SlowResponse(b'{"done":true}')
-        model = Ollama(Settings())
-        with patch.object(model.opener, 'open', return_value=response), patch('ip_bot.llm.MODEL_SECONDS', 0.04):
+        model = Ollama(Settings(model_timeout=0.03))
+        with patch.object(model.opener, 'open', return_value=response):
             with self.assertRaisesRegex(ModelError, 'model_warmup_timeout'):
                 model.warmup()
         self.assertTrue(response.closed)

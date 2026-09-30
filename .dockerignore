@@ -7,6 +7,7 @@
 !config/
 !config/sources.json
 !config/activities.json
+!config/okved_reference.json
 !config/tax_rules.json
 !config/ausn_regions.json
 !config/fonts/

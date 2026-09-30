@@ -99,9 +99,10 @@ def parse_extra(key, value):
 
 
 class Journey:
-    def __init__(self, services=None, settings=None):
+    def __init__(self, services=None, settings=None, activity_resolver=None):
         self.services = services
         self.settings = settings
+        self.activity_resolver = activity_resolver or suggest_activity
         self.guide = Guide(self)
 
     @staticmethod
@@ -584,7 +585,7 @@ class Journey:
         return None
 
     def activity(self, state, text):
-        result = suggest_activity(text, catalog=self.published('activities'))
+        result = self.activity_resolver(text, catalog=self.published('activities'))
         prefix = ''
         if result['status'] == 'clarify':
             state['flow'] = {'kind': 'okved', 'index': 0, 'description': text[:500]}
