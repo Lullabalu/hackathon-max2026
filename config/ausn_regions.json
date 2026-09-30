@@ -1,0 +1,882 @@
+{
+  "version": "ausn-regions-2026-09-30-v1",
+  "verified_on": "2026-09-30",
+  "supported_years": [
+    2026
+  ],
+  "source": "https://ausn.nalog.gov.ru/",
+  "sources": [
+    "https://ausn.nalog.gov.ru/"
+  ],
+  "scope": "Снимок полного реестра участников АУСН ФНС на 30.09.2026. Определяет только региональную доступность по месту регистрации ИП, не подтверждает остальные условия режима или региональные ставки. Федеральная территория Сириус включена в строку 23 по структуре реестра ФНС. Код 99 — город Байконур. Отсутствующий в реестре регион 52 отмечен явно; неизвестные названия не считаются запрещёнными.",
+  "regions": [
+    {
+      "code": "01",
+      "name": "Республика Адыгея",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Адыгея"
+      ]
+    },
+    {
+      "code": "02",
+      "name": "Республика Башкортостан",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Башкортостан",
+        "Башкирия",
+        "РБ",
+        "Уфа"
+      ]
+    },
+    {
+      "code": "03",
+      "name": "Республика Бурятия",
+      "starts_on": "2025-04-01",
+      "status": "participating",
+      "aliases": [
+        "Бурятия"
+      ]
+    },
+    {
+      "code": "04",
+      "name": "Республика Алтай",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Горный Алтай"
+      ]
+    },
+    {
+      "code": "05",
+      "name": "Республика Дагестан",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Дагестан"
+      ]
+    },
+    {
+      "code": "06",
+      "name": "Республика Ингушетия",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Ингушетия"
+      ]
+    },
+    {
+      "code": "07",
+      "name": "Кабардино-Балкарская Республика",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Кабардино-Балкария",
+        "КБР"
+      ]
+    },
+    {
+      "code": "08",
+      "name": "Республика Калмыкия",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Калмыкия"
+      ]
+    },
+    {
+      "code": "09",
+      "name": "Карачаево-Черкесская Республика",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Карачаево-Черкесия",
+        "КЧР"
+      ]
+    },
+    {
+      "code": "10",
+      "name": "Республика Карелия",
+      "starts_on": "2025-02-01",
+      "status": "participating",
+      "aliases": [
+        "Карелия"
+      ]
+    },
+    {
+      "code": "11",
+      "name": "Республика Коми",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Коми"
+      ]
+    },
+    {
+      "code": "12",
+      "name": "Республика Мари Эл",
+      "starts_on": "2025-02-01",
+      "status": "participating",
+      "aliases": [
+        "Мари Эл"
+      ]
+    },
+    {
+      "code": "13",
+      "name": "Республика Мордовия",
+      "starts_on": "2025-04-01",
+      "status": "participating",
+      "aliases": [
+        "Мордовия"
+      ]
+    },
+    {
+      "code": "14",
+      "name": "Республика Саха (Якутия)",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Саха",
+        "Якутия",
+        "Республика Саха"
+      ]
+    },
+    {
+      "code": "15",
+      "name": "Республика Северная Осетия-Алания",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Северная Осетия",
+        "Алания",
+        "РСО-Алания"
+      ]
+    },
+    {
+      "code": "16",
+      "name": "Республика Татарстан",
+      "starts_on": "2022-07-01",
+      "status": "participating",
+      "aliases": [
+        "Татарстан",
+        "РТ",
+        "Казань"
+      ]
+    },
+    {
+      "code": "17",
+      "name": "Республика Тыва",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Тыва",
+        "Тува",
+        "Республика Тува"
+      ]
+    },
+    {
+      "code": "18",
+      "name": "Удмуртская Республика",
+      "starts_on": "2025-04-01",
+      "status": "participating",
+      "aliases": [
+        "Удмуртия"
+      ]
+    },
+    {
+      "code": "19",
+      "name": "Республика Хакасия",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Хакасия"
+      ]
+    },
+    {
+      "code": "20",
+      "name": "Чеченская Республика",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Чечня"
+      ]
+    },
+    {
+      "code": "21",
+      "name": "Чувашская Республика",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Чувашия"
+      ]
+    },
+    {
+      "code": "22",
+      "name": "Алтайский край",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Алтайский край"
+      ]
+    },
+    {
+      "code": "23",
+      "name": "Краснодарский край, в том числе федеральная территория Сириус",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Краснодарский край",
+        "Кубань",
+        "Краснодар",
+        "Сириус",
+        "ФТ Сириус",
+        "федеральная территория Сириус"
+      ]
+    },
+    {
+      "code": "24",
+      "name": "Красноярский край",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Красноярск"
+      ]
+    },
+    {
+      "code": "25",
+      "name": "Приморский край",
+      "starts_on": "2025-09-01",
+      "status": "participating",
+      "aliases": [
+        "Приморье",
+        "Владивосток"
+      ]
+    },
+    {
+      "code": "26",
+      "name": "Ставропольский край",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Ставрополье"
+      ]
+    },
+    {
+      "code": "27",
+      "name": "Хабаровский край",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Хабаровск"
+      ]
+    },
+    {
+      "code": "28",
+      "name": "Амурская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Приамурье"
+      ]
+    },
+    {
+      "code": "29",
+      "name": "Архангельская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Архангельск"
+      ]
+    },
+    {
+      "code": "30",
+      "name": "Астраханская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Астрахань"
+      ]
+    },
+    {
+      "code": "31",
+      "name": "Белгородская область",
+      "starts_on": "2025-02-01",
+      "status": "participating",
+      "aliases": [
+        "Белгород"
+      ]
+    },
+    {
+      "code": "32",
+      "name": "Брянская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Брянск"
+      ]
+    },
+    {
+      "code": "33",
+      "name": "Владимирская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Владимирская обл"
+      ]
+    },
+    {
+      "code": "34",
+      "name": "Волгоградская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Волгоград"
+      ]
+    },
+    {
+      "code": "35",
+      "name": "Вологодская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Вологда"
+      ]
+    },
+    {
+      "code": "36",
+      "name": "Воронежская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Воронеж"
+      ]
+    },
+    {
+      "code": "37",
+      "name": "Ивановская область",
+      "starts_on": "2026-02-01",
+      "status": "participating",
+      "aliases": [
+        "Иваново"
+      ]
+    },
+    {
+      "code": "38",
+      "name": "Иркутская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Иркутск"
+      ]
+    },
+    {
+      "code": "39",
+      "name": "Калининградская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Калининград"
+      ]
+    },
+    {
+      "code": "40",
+      "name": "Калужская область",
+      "starts_on": "2022-07-01",
+      "status": "participating",
+      "aliases": [
+        "Калуга"
+      ]
+    },
+    {
+      "code": "41",
+      "name": "Камчатский край",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Камчатка"
+      ]
+    },
+    {
+      "code": "42",
+      "name": "Кемеровская область - Кузбасс",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Кузбасс",
+        "Кемеровская область",
+        "Кемерово"
+      ]
+    },
+    {
+      "code": "43",
+      "name": "Кировская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Кировская обл"
+      ]
+    },
+    {
+      "code": "44",
+      "name": "Костромская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Кострома"
+      ]
+    },
+    {
+      "code": "45",
+      "name": "Курганская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Курган"
+      ]
+    },
+    {
+      "code": "46",
+      "name": "Курская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Курск"
+      ]
+    },
+    {
+      "code": "47",
+      "name": "Ленинградская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Ленобласть",
+        "Ленинградская обл"
+      ]
+    },
+    {
+      "code": "48",
+      "name": "Липецкая область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Липецк"
+      ]
+    },
+    {
+      "code": "49",
+      "name": "Магаданская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Магадан"
+      ]
+    },
+    {
+      "code": "50",
+      "name": "Московская область",
+      "starts_on": "2022-07-01",
+      "status": "participating",
+      "aliases": [
+        "Подмосковье",
+        "Московская обл",
+        "МО",
+        "150",
+        "750"
+      ]
+    },
+    {
+      "code": "51",
+      "name": "Мурманская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Мурманск"
+      ]
+    },
+    {
+      "code": "52",
+      "name": "Нижегородская область",
+      "starts_on": null,
+      "status": "not_listed",
+      "aliases": [
+        "Нижегородская обл",
+        "Нижний Новгород",
+        "НН",
+        "152"
+      ],
+      "note": "Регион отсутствует в полном опубликованном перечне участников ФНС на дату проверки; дата введения не подтверждена."
+    },
+    {
+      "code": "53",
+      "name": "Новгородская область",
+      "starts_on": "2025-11-01",
+      "status": "participating",
+      "aliases": [
+        "Новгородская обл",
+        "Великий Новгород"
+      ]
+    },
+    {
+      "code": "54",
+      "name": "Новосибирская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Новосибирск",
+        "НСК"
+      ]
+    },
+    {
+      "code": "55",
+      "name": "Омская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Омск"
+      ]
+    },
+    {
+      "code": "56",
+      "name": "Оренбургская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Оренбург"
+      ]
+    },
+    {
+      "code": "57",
+      "name": "Орловская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Орёл"
+      ]
+    },
+    {
+      "code": "58",
+      "name": "Пензенская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Пенза"
+      ]
+    },
+    {
+      "code": "59",
+      "name": "Пермский край",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Пермь"
+      ]
+    },
+    {
+      "code": "60",
+      "name": "Псковская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Псков"
+      ]
+    },
+    {
+      "code": "61",
+      "name": "Ростовская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Ростов-на-Дону",
+        "Ростовская обл"
+      ]
+    },
+    {
+      "code": "62",
+      "name": "Рязанская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Рязань"
+      ]
+    },
+    {
+      "code": "63",
+      "name": "Самарская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Самара"
+      ]
+    },
+    {
+      "code": "64",
+      "name": "Саратовская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Саратов"
+      ]
+    },
+    {
+      "code": "65",
+      "name": "Сахалинская область",
+      "starts_on": "2025-08-01",
+      "status": "participating",
+      "aliases": [
+        "Сахалин"
+      ]
+    },
+    {
+      "code": "66",
+      "name": "Свердловская область",
+      "starts_on": "2025-02-01",
+      "status": "participating",
+      "aliases": [
+        "Екатеринбург"
+      ]
+    },
+    {
+      "code": "67",
+      "name": "Смоленская область",
+      "starts_on": "2025-10-01",
+      "status": "participating",
+      "aliases": [
+        "Смоленск"
+      ]
+    },
+    {
+      "code": "68",
+      "name": "Тамбовская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Тамбов"
+      ]
+    },
+    {
+      "code": "69",
+      "name": "Тверская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Тверь"
+      ]
+    },
+    {
+      "code": "70",
+      "name": "Томская область",
+      "starts_on": "2026-02-01",
+      "status": "participating",
+      "aliases": [
+        "Томск"
+      ]
+    },
+    {
+      "code": "71",
+      "name": "Тульская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Тула"
+      ]
+    },
+    {
+      "code": "72",
+      "name": "Тюменская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Тюмень"
+      ]
+    },
+    {
+      "code": "73",
+      "name": "Ульяновская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Ульяновск"
+      ]
+    },
+    {
+      "code": "74",
+      "name": "Челябинская область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Челябинск"
+      ]
+    },
+    {
+      "code": "75",
+      "name": "Забайкальский край",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Забайкалье",
+        "Чита"
+      ]
+    },
+    {
+      "code": "76",
+      "name": "Ярославская область",
+      "starts_on": "2026-02-01",
+      "status": "participating",
+      "aliases": [
+        "Ярославль"
+      ]
+    },
+    {
+      "code": "77",
+      "name": "Москва",
+      "starts_on": "2022-07-01",
+      "status": "participating",
+      "aliases": [
+        "город Москва",
+        "г Москва",
+        "МСК",
+        "Moscow",
+        "RU-MOW",
+        "177",
+        "197",
+        "199",
+        "777",
+        "797"
+      ]
+    },
+    {
+      "code": "78",
+      "name": "Санкт-Петербург",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "город Санкт-Петербург",
+        "г Санкт-Петербург",
+        "СПб",
+        "Питер",
+        "Петербург",
+        "Санкт Петербург",
+        "Saint Petersburg",
+        "RU-SPE",
+        "178",
+        "198"
+      ]
+    },
+    {
+      "code": "79",
+      "name": "Еврейская автономная область",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "ЕАО"
+      ]
+    },
+    {
+      "code": "83",
+      "name": "Ненецкий автономный округ",
+      "starts_on": "2025-02-01",
+      "status": "participating",
+      "aliases": [
+        "НАО"
+      ]
+    },
+    {
+      "code": "86",
+      "name": "Ханты-Мансийский АО - ЮГРА",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Ханты-Мансийский автономный округ",
+        "Ханты-Мансийский автономный округ — Югра",
+        "ХМАО",
+        "ХМАО-Югра",
+        "Югра"
+      ]
+    },
+    {
+      "code": "87",
+      "name": "Чукотский автономный округ",
+      "starts_on": "2026-02-01",
+      "status": "participating",
+      "aliases": [
+        "Чукотка",
+        "ЧАО"
+      ]
+    },
+    {
+      "code": "89",
+      "name": "Ямало-Ненецкий автономный округ",
+      "starts_on": "2026-04-01",
+      "status": "participating",
+      "aliases": [
+        "ЯНАО",
+        "Ямал"
+      ]
+    },
+    {
+      "code": "90",
+      "name": "Запорожская область",
+      "starts_on": "2025-02-01",
+      "status": "participating",
+      "aliases": [
+        "Запорожская обл"
+      ]
+    },
+    {
+      "code": "91",
+      "name": "Республика Крым",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Крым"
+      ]
+    },
+    {
+      "code": "92",
+      "name": "Севастополь",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "город Севастополь"
+      ]
+    },
+    {
+      "code": "93",
+      "name": "Донецкая Народная Республика",
+      "starts_on": "2025-03-01",
+      "status": "participating",
+      "aliases": [
+        "ДНР"
+      ]
+    },
+    {
+      "code": "94",
+      "name": "Луганская Народная Республика",
+      "starts_on": "2025-08-01",
+      "status": "participating",
+      "aliases": [
+        "ЛНР"
+      ]
+    },
+    {
+      "code": "95",
+      "name": "Херсонская область",
+      "starts_on": "2026-01-01",
+      "status": "participating",
+      "aliases": [
+        "Херсонская обл"
+      ]
+    },
+    {
+      "code": "99",
+      "name": "Город Байконур",
+      "starts_on": "2025-01-01",
+      "status": "participating",
+      "aliases": [
+        "Байконур"
+      ]
+    }
+  ]
+}

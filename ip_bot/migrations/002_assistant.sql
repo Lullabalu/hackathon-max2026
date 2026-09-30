@@ -1,0 +1,23 @@
+ALTER TABLE events ADD COLUMN IF NOT EXISTS attempts INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS next_attempt_at TIMESTAMPTZ NOT NULL DEFAULT now();
+ALTER TABLE events ADD COLUMN IF NOT EXISTS dead_letter BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS last_error TEXT;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS acknowledged BOOLEAN NOT NULL DEFAULT FALSE;
+CREATE TABLE IF NOT EXISTS conversation_turns (
+    seq BIGINT PRIMARY KEY REFERENCES events(seq), user_id BIGINT NOT NULL,
+    question TEXT NOT NULL, answer TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS conversation_user_idx ON conversation_turns(user_id, seq DESC);
+CREATE TABLE IF NOT EXISTS documents (
+    url TEXT PRIMARY KEY, title TEXT NOT NULL, content_hash TEXT NOT NULL,
+    content_type TEXT NOT NULL, links JSONB NOT NULL,
+    fetched_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS passages (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    url TEXT NOT NULL REFERENCES documents(url) ON DELETE CASCADE,
+    text TEXT NOT NULL,
+    search TSVECTOR GENERATED ALWAYS AS (to_tsvector('russian', text)) STORED
+);
+CREATE INDEX IF NOT EXISTS passages_search_idx ON passages USING GIN(search);
+CREATE INDEX IF NOT EXISTS passages_url_idx ON passages(url);

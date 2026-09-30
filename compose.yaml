@@ -1,0 +1,140 @@
+x-app: &app
+  build: .
+  image: max-ip-bot:local
+  restart: unless-stopped
+  init: true
+  read_only: true
+  tmpfs:
+    - /tmp:size=64m,mode=1777
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  volumes:
+    - ./config:/app/config:ro
+  environment:
+    PGHOST: db
+    PGPORT: "5432"
+    PGDATABASE: max_bot
+    PGUSER: max_bot
+    PGPASSWORD: ${POSTGRES_PASSWORD:?Создайте .env командой python3 scripts/init_env.py}
+    MAX_BOT_TOKEN: ${MAX_BOT_TOKEN:-}
+    OLLAMA_BASE_URL: http://ollama:11434
+    OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3.5:4b-q4_K_M}
+    AI_TIMEOUT_SECONDS: ${AI_TIMEOUT_SECONDS:-0}
+    AI_CONTEXT_TOKENS: ${AI_CONTEXT_TOKENS:-16384}
+    AI_THREADS: ${AI_THREADS:-4}
+    AI_DEVICE: ${AI_DEVICE:-cpu}
+    AI_KEEP_ALIVE: ${AI_KEEP_ALIVE:-30m}
+    SEARCH_MAX_PAGES: ${SEARCH_MAX_PAGES:-12}
+    SOURCE_TTL_HOURS: ${SOURCE_TTL_HOURS:-24}
+    MAX_WEBHOOK_SECRET: ${MAX_WEBHOOK_SECRET:-}
+    MAX_WEBHOOK_URL: ${MAX_WEBHOOK_URL:-}
+    CONSULTANT_URL: ${CONSULTANT_URL:-}
+  depends_on:
+    db:
+      condition: service_healthy
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+services:
+  db:
+    image: postgres:17.11-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: max_bot
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Создайте .env}
+      POSTGRES_DB: max_bot
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-databases.sql:/docker-entrypoint-initdb.d/01-databases.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U max_bot -d max_bot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  ollama:
+    image: ollama/ollama:0.34.2
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_NO_CLOUD: "1"
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_LOADED_MODELS: "1"
+      OLLAMA_CONTEXT_LENGTH: ${AI_CONTEXT_TOKENS:-16384}
+      OLLAMA_KEEP_ALIVE: ${AI_KEEP_ALIVE:-30m}
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+  model-init:
+    image: ollama/ollama:0.34.2
+    restart: "no"
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3.5:4b-q4_K_M}
+    entrypoint: ["/bin/sh", "-ec"]
+    command: ['ollama pull "$$OLLAMA_MODEL"']
+    depends_on:
+      ollama:
+        condition: service_healthy
+  worker:
+    <<: *app
+    command: ["python", "-m", "ip_bot", "--mode", "worker"]
+    stop_grace_period: 30s
+    depends_on:
+      db:
+        condition: service_healthy
+      model-init:
+        condition: service_completed_successfully
+  polling:
+    <<: *app
+    profiles: [polling]
+    command: ["python", "-m", "ip_bot", "--mode", "polling"]
+  admin:
+    <<: *app
+    profiles: [admin]
+    command: ["python", "-m", "ip_bot", "--mode", "admin"]
+    environment:
+      PGHOST: db
+      PGPORT: "5432"
+      PGDATABASE: max_bot
+      PGUSER: max_bot
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Создайте .env}
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-}
+    ports:
+      - "127.0.0.1:8081:8081"
+  webhook:
+    <<: *app
+    profiles: [production]
+    command: ["python", "-m", "ip_bot", "--mode", "webhook"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/readyz', timeout=15)"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+  caddy:
+    image: caddy:2.10.2-alpine
+    profiles: [production]
+    restart: unless-stopped
+    environment:
+      BOT_DOMAIN: ${BOT_DOMAIN:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      webhook:
+        condition: service_healthy
+volumes:
+  postgres_data:
+  ollama_data:
+  caddy_data:
+  caddy_config:

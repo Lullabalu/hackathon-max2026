@@ -1,0 +1,12 @@
+{$BOT_DOMAIN} {
+    @webhook path /webhook
+    handle @webhook {
+        request_body {
+            max_size 1MB
+        }
+        reverse_proxy webhook:8080
+    }
+    handle {
+        respond "Not found" 404
+    }
+}

@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "form": "Р21001",
+  "knd": "1112501",
+  "revision": "2024-01-09",
+  "checked_on": "2026-09-30",
+  "order": "Приказ ФНС России от 09.01.2024 № ЕД-7-14/4@",
+  "source_page": "https://www.nalog.gov.ru/rn77/about_fts/docs/14432439/",
+  "source_pdf": "https://www.nalog.gov.ru/html/sites/www.new.nalog.ru/files/about_fts/docs/14432439.pdf",
+  "source_sha256": "6f777e0133372f6731db23d850af2e73dd84cdb47a211a9b1c266c26c89e959d",
+  "source_pages": [
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "template": "r21001-2024.pdf",
+  "template_sha256": "eead282f8e783e8b5f058fba84c4ce437af897a6a6cf9ee10a141941f88dd2c2",
+  "pages": [
+    {
+      "size_points": [
+        600.48,
+        861.12
+      ],
+      "image_pixels": [
+        2502,
+        3588
+      ]
+    },
+    {
+      "size_points": [
+        598.32,
+        859.68
+      ],
+      "image_pixels": [
+        2493,
+        3582
+      ]
+    },
+    {
+      "size_points": [
+        600.48,
+        861.12
+      ],
+      "image_pixels": [
+        2502,
+        3588
+      ]
+    },
+    {
+      "size_points": [
+        596.16,
+        858.24
+      ],
+      "image_pixels": [
+        2484,
+        3576
+      ]
+    },
+    {
+      "size_points": [
+        593.28,
+        857.52
+      ],
+      "image_pixels": [
+        2472,
+        3573
+      ]
+    }
+  ],
+  "coordinate_system": "Original scan pixels, origin top left; cell centers. Converted to PDF points without rescaling the template.",
+  "fields": {
+    "surname": {
+      "page": 0,
+      "center": [
+        488,
+        908
+      ],
+      "advance": [
+        55.02,
+        -0.5
+      ],
+      "cells": 34
+    },
+    "name": {
+      "page": 0,
+      "center": [
+        488,
+        1022
+      ],
+      "advance": [
+        55.02,
+        -0.5
+      ],
+      "cells": 34
+    },
+    "patronymic": {
+      "page": 0,
+      "center": [
+        488,
+        1137
+      ],
+      "advance": [
+        55.02,
+        -0.5
+      ],
+      "cells": 34
+    },
+    "inn": {
+      "page": 0,
+      "center": [
+        551,
+        1707
+      ],
+      "advance": [
+        55.05,
+        -0.27
+      ],
+      "cells": 12
+    },
+    "citizenship": {
+      "page": 0,
+      "center": [
+        225,
+        2481
+      ],
+      "advance": [
+        0,
+        0
+      ],
+      "cells": 1
+    },
+    "primary": {
+      "page": 3,
+      "center": [
+        882.5,
+        734
+      ],
+      "advance": [
+        55.1,
+        -0.16
+      ],
+      "cells": 6,
+      "digit_offsets": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        7
+      ]
+    },
+    "additional": {
+      "page": 3,
+      "column_centers": [
+        254,
+        789.5,
+        1326.5,
+        1865
+      ],
+      "row_centers": [
+        973,
+        1104,
+        1235.5,
+        1365.5,
+        1496,
+        1624.5,
+        1756,
+        1885,
+        2016,
+        2145,
+        2275.5,
+        2406,
+        2536,
+        2666,
+        2797,
+        2927,
+        3057.5
+      ],
+      "column_y_shift": [
+        0,
+        -3.0,
+        -6.5,
+        -10
+      ],
+      "row_x_shift": 0.35,
+      "advance": [
+        55.1,
+        -0.16
+      ],
+      "digit_offsets": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        7
+      ],
+      "capacity": 68
+    },
+    "email": {
+      "page": 4,
+      "center": [
+        209,
+        1121
+      ],
+      "advance": [
+        55.05,
+        -0.16
+      ],
+      "cells": 38
+    },
+    "page_a": {
+      "page": 3,
+      "center": [
+        1413,
+        304
+      ],
+      "advance": [
+        55.5,
+        0
+      ],
+      "cells": 3
+    },
+    "page_b": {
+      "page": 4,
+      "center": [
+        1414.5,
+        304
+      ],
+      "advance": [
+        55.2,
+        0
+      ],
+      "cells": 3
+    }
+  },
+  "supported": {
+    "output": "Five-page, flattened, partially filled official 2024 template with visible draft marks. Not signed, filed or ready for filing.",
+    "fields": [
+      "Cyrillic surname/name/patronymic (uppercase, up to 34 characters each)",
+      "12 ASCII-digit INN (format only, not verified with FNS)",
+      "ASCII email for delivery of registration result on sheet Б (up to 38 characters, case preserved)",
+      "Explicit citizenship ru→1 / foreign→2 / stateless→3",
+      "One main OKVED with 4–6 digits and up to 68 distinct additional codes"
+    ],
+    "applicants": "Common fields for Russian/foreign citizens and stateless applicants; age never converted into date of birth. No verification of registration eligibility.",
+    "empty_fields": "Missing supported values are left blank. No guessing or silent truncation."
+  },
+  "unsupported": [
+    "Полностью готовое заявление для подачи; соответствие предписанному печатному шрифту не гарантируется",
+    "Паспорт, пол, дата и место рождения, адрес по ФИАС, телефон",
+    "Латинская запись ФИО, код страны иностранца и сведения о праве проживания иностранца/лица без гражданства",
+    "Статус главы КФХ, специальные ситуации заявителя",
+    "Подпись, собственноручная запись ФИО, служебные и нотариальные разделы, подача и доставка",
+    "Больше 68 дополнительных ОКВЭД, ФИО/email длиннее клеток, email не в ASCII"
+  ],
+  "validation_note": "Only field syntax/capacity are checked; INN ownership, OKVED existence, citizenship and registration eligibility are not verified."
+}

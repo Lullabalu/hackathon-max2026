@@ -1,0 +1,10 @@
+{
+  "allowed_domains": ["nalog.gov.ru", "nalog.ru", "minfin.gov.ru", "publication.pravo.gov.ru"],
+  "sources": [
+    {"id": "registration", "title": "Регистрация ИП, заявления и документы", "urls": ["https://www.nalog.gov.ru/create_business/ip/creation/registration/step2/", "https://www.nalog.gov.ru/rn77/ip/interest/reg_ip/petition/", "https://www.nalog.gov.ru/create_business/ip/creation/registration/"]},
+    {"id": "taxes", "title": "Выбор налогового режима, УСН и патент", "urls": ["https://www.nalog.gov.ru/rn77/taxation/taxes/usn/", "https://www.nalog.gov.ru/rn77/taxation/taxes/patent/"]},
+    {"id": "self_employed", "title": "Самозанятость и налог на профессиональный доход", "urls": ["https://npd.nalog.ru/"]},
+    {"id": "changes", "title": "Изменения сведений ИП, ОКВЭД, ЕГРИП", "urls": ["https://www.nalog.gov.ru/create_business/ip/in_progress/egrip_changes/"]},
+    {"id": "closing", "title": "Закрытие и прекращение деятельности ИП", "urls": ["https://www.nalog.gov.ru/create_business/ip/closing/"]}
+  ]
+}

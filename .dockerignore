@@ -1,0 +1,19 @@
+# В контекст сборки попадают только файлы приложения.
+**
+!Dockerfile
+!requirements.txt
+!ip_bot/
+!ip_bot/**
+!config/
+!config/sources.json
+!config/activities.json
+!config/tax_rules.json
+!config/ausn_regions.json
+!config/fonts/
+!config/fonts/**
+!config/forms/
+!config/forms/**
+!config/certs/
+!config/certs/russian_trusted_root_ca.crt
+**/__pycache__/
+**/*.pyc

@@ -1,0 +1,74 @@
+{
+  "version": "2026.09.30-1",
+  "verified_on": "2026-09-30",
+  "supported_years": [2026],
+  "scope": "Планирование налогов ИП за полный 2026 год. Региональные льготы и право на режим требуют отдельной проверки.",
+  "rules": {
+    "npd": {
+      "revenue_limit": "2400000", "employees_limit": 0,
+      "person_rate": "0.04", "business_rate": "0.06",
+      "person_deduction_rate": "0.01", "business_deduction_rate": "0.02",
+      "deduction_limit": "10000", "own_contributions": "0",
+      "sources": ["https://npd.nalog.ru/"]
+    },
+    "usn": {
+      "revenue_limit": "490500000", "employees_limit": 130,
+      "income_rate": "0.06", "profit_rate": "0.15", "minimum_rate": "0.01",
+      "employee_deduction_limit": "0.5",
+      "sources": [
+        "https://www.nalog.gov.ru/new2026/",
+        "https://www.nalog.gov.ru/rn26/taxation/taxes/usn/",
+        "https://www.nalog.gov.ru/rn77/taxation/taxes/vibor_sn/",
+        "https://www.nalog.gov.ru/rn25/ifns/r25_14/info/16613357/",
+        "https://www.nalog.gov.ru/rn77/taxation/taxes/usn/16611776/",
+        "https://www.nalog.gov.ru/rn77/about_fts/about_nalog/15561819/"
+      ]
+    },
+    "patent": {
+      "revenue_limit": "20000000", "employees_limit": 15,
+      "standard_rate": "0.06", "check_previous_year": true,
+      "employee_deduction_limit": "0.5",
+      "sources": [
+        "https://www.nalog.gov.ru/new2026/",
+        "https://www.nalog.gov.ru/rn77/taxation/taxes/patent/",
+        "https://www.nalog.gov.ru/rn38/ifns/ifns3853/events/16581829/"
+      ]
+    },
+    "ausn": {
+      "revenue_limit": "60000000", "employees_limit": 5,
+      "income_rate": "0.08", "profit_rate": "0.20", "minimum_rate": "0.03",
+      "tax_period": "month", "own_contributions": "0", "employee_accident_annual": "2959",
+      "sources": ["https://ausn.nalog.gov.ru/", "https://www.nalog.gov.ru/rn25/ifns/r25_17/info/16615798/"]
+    },
+    "own_contributions": {
+      "fixed": "57390", "threshold": "300000", "additional_rate": "0.01", "additional_cap": "321818",
+      "profit_regimes_base": "Доходы минус учитываемые расходы; патент — потенциальный доход за срок патента, не фактическая выручка.",
+      "sources": [
+        "https://www.nalog.gov.ru/rn16/news/tax_doc_news/16617063/",
+        "https://www.nalog.gov.ru/rn49/news/activities_fts/16629277/",
+        "https://www.nalog.gov.ru/html/sites/www.rn92.nalog.ru/24122025_NDFL%20SV.pdf"
+      ]
+    },
+    "employer_contributions": {
+      "per_employee_base_limit": "2979000", "standard_rate": "0.30", "above_limit_rate": "0.151",
+      "note": "Один годовой ФОТ не определяет точные взносы: нужны выплаты по сотрудникам, тариф, льготы и травматизм.",
+      "sources": ["https://www.nalog.gov.ru/rn77/ip/prem_employ/"]
+    },
+    "vat": {
+      "usn_exemption_limit": "20000000", "usn_reduced_rate_threshold": "272500000",
+      "standard_rate": "0.22", "other_rates": ["0.10", "0"], "usn_special_rates": ["0.05", "0.07"],
+      "note": "Для УСН важны доходы прошлого и текущего года; при превышении в течение года — месяц превышения. НДС не равен автоматически ставке, умноженной на годовую выручку.",
+      "sources": ["https://www.nalog.gov.ru/new2026/", "https://www.nalog.gov.ru/rn77/taxation/taxes/nds_usn/"]
+    },
+    "osno": {
+      "resident_ndfl_brackets": [
+        {"up_to": "2400000", "rate": "0.13"},
+        {"up_to": "5000000", "rate": "0.15"},
+        {"up_to": "20000000", "rate": "0.18"},
+        {"up_to": "50000000", "rate": "0.20"},
+        {"up_to": null, "rate": "0.22"}
+      ],
+      "sources": ["https://www.nalog.gov.ru/create_business/ip/in_progress/ndfl/year_results/", "https://www.nalog.gov.ru/rn77/taxation/taxes/ndfl/nalog_vichet/prof_nv/"]
+    }
+  }
+}

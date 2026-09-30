@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+data/
+.DS_Store
+backups/
+*.pem
+*.key
+*.gguf
+*.safetensors
+.pytest_cache/
